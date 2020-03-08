@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01E225BB2412DC71004903DB /* tcpsocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01E225BA2412DC71004903DB /* tcpsocket.cpp */; };
+		01E225BE24141216004903DB /* abstractsocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01E225BC24141216004903DB /* abstractsocket.cpp */; };
 		4586425823312894001A5FCA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4586425723312894001A5FCA /* main.cpp */; };
 		4586425F23313102001A5FCA /* connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4586425E23313009001A5FCA /* connection.cpp */; };
 /* End PBXBuildFile section */
@@ -24,6 +26,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01E225B92412DC30004903DB /* tcpsocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tcpsocket.h; sourceTree = SOURCE_ROOT; };
+		01E225BA2412DC71004903DB /* tcpsocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tcpsocket.cpp; sourceTree = "<group>"; };
+		01E225BC24141216004903DB /* abstractsocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = abstractsocket.cpp; sourceTree = "<group>"; };
+		01E225BD24141216004903DB /* abstractsocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = abstractsocket.hpp; sourceTree = "<group>"; };
 		4586425423312894001A5FCA /* networkhandler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = networkhandler; sourceTree = BUILT_PRODUCTS_DIR; };
 		4586425723312894001A5FCA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		4586425D23312C36001A5FCA /* connection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = connection.h; sourceTree = "<group>"; };
@@ -62,6 +68,10 @@
 		4586425623312894001A5FCA /* networkhandler */ = {
 			isa = PBXGroup;
 			children = (
+				01E225B92412DC30004903DB /* tcpsocket.h */,
+				01E225BC24141216004903DB /* abstractsocket.cpp */,
+				01E225BD24141216004903DB /* abstractsocket.hpp */,
+				01E225BA2412DC71004903DB /* tcpsocket.cpp */,
 				4586425723312894001A5FCA /* main.cpp */,
 			);
 			path = networkhandler;
@@ -93,7 +103,7 @@
 		45864249233123F0001A5FCA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1030;
+				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					4586425323312894001A5FCA = {
 						CreatedOnToolsVersion = 10.3;
@@ -122,8 +132,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01E225BE24141216004903DB /* abstractsocket.cpp in Sources */,
 				4586425F23313102001A5FCA /* connection.cpp in Sources */,
 				4586425823312894001A5FCA /* main.cpp in Sources */,
+				01E225BB2412DC71004903DB /* tcpsocket.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,13 +145,65 @@
 		4586424D233123F0001A5FCA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
 		4586424E233123F0001A5FCA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 			};
 			name = Release;
