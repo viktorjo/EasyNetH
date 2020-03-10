@@ -15,24 +15,6 @@ AbstractSocket::AbstractSocket(AbstractSocket::SocketType socketType)
     socket_internal.address.sin_family = AF_INET;
     socket_internal.address.sin_addr.s_addr = INADDR_ANY;
     //socket_out = socket_internal;
-    
-    
-    
-    socket_internal.socket_fd = socket(socket_internal.address.sin_family,
-                        SOCK_STREAM,
-                        0);
-    if (socket_internal.socket_fd == 0)
-    {
-        socket_error = SOCKET_CREATION_FAILED;
-        perror("Could not create socket");
-    }
-    else
-    {
-        if (::setsockopt(socket_internal.socket_fd, SOL_SOCKET, SO_REUSEADDR, &socket_internal.opt, sizeof(socket_internal.opt)))
-        {
-            perror("setsockopt");
-        }
-    }
 }
 
 AbstractSocket::~AbstractSocket()
@@ -42,10 +24,29 @@ AbstractSocket::~AbstractSocket()
 
 bool AbstractSocket::bind(u_int16_t port)
 {
-    socket_internal.address.sin_port = htons( port );
     
-    bool bindsuccess = ::bind(socket_internal.socket_fd, (struct sockaddr *) &socket_internal.address, sizeof(socket_internal.address)) < 0;
-    if (!bindsuccess) {
+    address.sin_port = htons( port );
+    
+    server_fd = socket(AF_INET,
+                        SOCK_STREAM,
+                        0);
+    if (server_fd == 0)
+    {
+        socket_error = SOCKET_CREATION_FAILED;
+        perror("Could not create socket");
+        return false;
+    }
+    else
+    {
+        if (::setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)))
+        {
+            perror("setsockopt");
+            return false;
+        }
+    }
+    
+    if(::bind(server_fd, (struct sockaddr *) &address, sizeof(address)) < 0)
+    {
         perror("Could not bind");
         socket_error = COULD_NOT_BIND;
         return false;

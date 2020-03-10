@@ -76,6 +76,7 @@ private:
     int server_fd;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
+    int opt;
     
     enum SocketType socket_type;
     enum SocketState socket_state = NOT_IN_USE;
