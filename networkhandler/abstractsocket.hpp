@@ -60,7 +60,7 @@ private:
     enum SocketState
     {
         NOT_IN_USE = 0,
-        BINDED,
+        BOUND,
         LISTENING,
         CONNECTED
     };
@@ -72,18 +72,19 @@ private:
         socklen_t addrlen = sizeof(address);
         int opt = 1;
     };
-    
+    /*
     int server_fd;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
     int opt;
+    */
     
     enum SocketType socket_type;
     enum SocketState socket_state = NOT_IN_USE;
     enum SocketError socket_error = NO_ERROR;
     
     struct socket_data socket_internal; // Handle connection and incoming data.
-    //struct socket_data socket_out;
+    struct socket_data socket_out;
     
     //AbstractSocket(const AbstractSocket &other, enum SocketState state);
     

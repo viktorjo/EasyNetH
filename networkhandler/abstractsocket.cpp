@@ -25,12 +25,12 @@ AbstractSocket::~AbstractSocket()
 bool AbstractSocket::bind(u_int16_t port)
 {
     
-    address.sin_port = htons( port );
     
-    server_fd = socket(AF_INET,
+    
+    socket_internal.socket_fd = socket(AF_INET,
                         SOCK_STREAM,
                         0);
-    if (server_fd == 0)
+    if (socket_internal.socket_fd == 0)
     {
         socket_error = SOCKET_CREATION_FAILED;
         perror("Could not create socket");
@@ -38,21 +38,22 @@ bool AbstractSocket::bind(u_int16_t port)
     }
     else
     {
-        if (::setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)))
+        socket_internal.address.sin_port = htons( port );
+        if (::setsockopt(socket_internal.socket_fd, SOL_SOCKET, SO_REUSEADDR, &socket_internal.opt, sizeof(socket_internal.opt)))
         {
             perror("setsockopt");
             return false;
         }
     }
     
-    if(::bind(server_fd, (struct sockaddr *) &address, sizeof(address)) < 0)
+    if(::bind(socket_internal.socket_fd, (struct sockaddr *) &socket_internal.address, sizeof(socket_internal.address)) < 0)
     {
         perror("Could not bind");
         socket_error = COULD_NOT_BIND;
         return false;
     }
     socket_error = NO_ERROR;
-    socket_state = BINDED;
+    socket_state = BOUND;
     return true;
 }
 
@@ -62,13 +63,12 @@ bool AbstractSocket::listen(int maxIncomingConnection)
         socket_error = TCP_SOCKET;
         return false;
     }
-    if (socket_state != BINDED) {
+    if (socket_state != BOUND) {
         socket_error = SOCKET_NOT_BOUND;
         return false;
     }
-    int success = ::listen(socket_internal.socket_fd, maxIncomingConnection) < 0;
     
-    if (!success)
+    if (::listen(socket_internal.socket_fd, maxIncomingConnection) < 0)
     {
         socket_error = LISTEN_FAILED;
         return false;
@@ -84,11 +84,11 @@ bool AbstractSocket::accept()
         socket_error = TCP_SOCKET;
         return false;
     }
-    //socket_out.socket_fd = ::accept(socket_internal.socket_fd, (struct sockaddr *) &socket_out.address, &socket_out.addrlen);
-    //if (socket_out.socket_fd < 0) {
+    socket_out.socket_fd = ::accept(socket_internal.socket_fd, (struct sockaddr *) &socket_out.address, &socket_out.addrlen);
+    if (socket_out.socket_fd < 0) {
         socket_error = ACCEPT_FAILED;
         return false;
-    //}
+    }
     socket_error = NO_ERROR;
     socket_state = CONNECTED;
     return true;
@@ -126,7 +126,7 @@ ssize_t AbstractSocket::readData(BYTE *data, size_t maxSize)
         socket_error = NOT_CONNECTED;
         return -1;
     }
-    ssize_t bytes_read = ::recv(socket_internal.socket_fd, data, maxSize, 0);
+    ssize_t bytes_read = ::recv(socket_out.socket_fd, data, maxSize, 0);
     if (bytes_read < 0)
     {
         socket_error = READ_FAILED;
@@ -143,15 +143,14 @@ ssize_t AbstractSocket::sendData(const BYTE *data, size_t size)
         return -1;
     }
     
-    //ssize_t bytes_sent = ::send(socket_out.socket_fd, data, size, 0);
-    //if (bytes_sent < 0)
-    //{
+    ssize_t bytes_sent = ::send(socket_out.socket_fd, data, size, 0);
+    if (bytes_sent < 0)
+    {
         socket_error = SEND_FAILED;
         return -1;
-    //}
+    }
     socket_error = NO_ERROR;
-    //return bytes_sent;
-    return 0;
+    return bytes_sent;
 }
 
 

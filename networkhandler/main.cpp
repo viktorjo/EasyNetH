@@ -29,25 +29,41 @@ void abstr_call()
     if (success) {
         std::cout << "Bound socket\n";
     }
+    else {
+        std::cout << "Could not bind socket\n";
+    }
+        
     success = test.listen(1);
     if (success) {
         std::cout << "Bound listening to socket\n";
     }
-    test.accept();
+    else {
+        std::cout << "Could not listen to socket\n" << test.error();
+    }
+    success = test.accept();
     if (success) {
-        std::cout << "Socket Acepted\n";
+        std::cout << "Socket Accepted\n";
+    }
+    else {
+        std::cout << "Could not accept socket.\n";
     }
     bytes_read = test.readData(data, 1024);
     if (bytes_read > 0)
     {
-        std::cout << "Read " << bytes_read << " of data\n";
+        std::cout << "Read " << bytes_read << " bytes of data\n";
         std::cout << data;
+    }
+    else {
+        std::cout << "Could not read data\n";
     }
     bytes_sent = test.sendData(data, bytes_read);
     if (bytes_sent > 0)
     {
-        std::cout << "Sent " << bytes_read << " of data\n";
+        std::cout << "Sent " << bytes_read << " bytes of data\n";
         std::cout << data;
+    }
+    else {
+        std::cout << "Could not send socket\n";
     }
 }
 
@@ -108,7 +124,7 @@ void nrml_call()
 int main(int argc, const char * argv[]) {
     
     abstr_call();
-    nrml_call();
+    //nrml_call();
     
     return 0;
 }
