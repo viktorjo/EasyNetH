@@ -13,6 +13,8 @@
 #include <vector>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
 
 class AbstractSocket {
 public:
@@ -26,6 +28,7 @@ public:
     enum SocketError
     {
         NO_ERROR,
+        SOCKET_TYPE_NOT_SUPPORTED,
         SOCKET_CREATION_FAILED,
         SOCKET_ALREADY_IN_USE,
         COULD_NOT_BIND,
@@ -36,19 +39,26 @@ public:
         ACCEPT_FAILED,
         NOT_CONNECTED,
         READ_FAILED,
-        SEND_FAILED
+        SEND_FAILED,
+		BAD_ADDRESS,
+		CONNECT_FAILED
     };
     
     AbstractSocket(AbstractSocket::SocketType socketType);
     virtual ~AbstractSocket();
     
+	
+	static bool isAddrOk(std::string addr);
     //bool bind(const std::string &hostName, u_int16_t port);
     bool bind(u_int16_t port);
     
     bool listen(int maxIncomingConnections);
     bool accept();
-    
-    virtual void connectToHost(const std::string &hostName, u_int16_t port);
+    	
+	
+	bool connectToHost(const std::string &hostName, u_int16_t port);
+	
+	void closeSockets();
     
     enum SocketError error() const { return socket_error;}
     
@@ -86,7 +96,8 @@ private:
     struct socket_data socket_internal; // Handle connection and incoming data.
     struct socket_data socket_out;
     
-    //AbstractSocket(const AbstractSocket &other, enum SocketState state);
+    bool bindTcp(u_int16_t port);
+    //bool bindUdp(u_int16_t port  );
     
     
 };

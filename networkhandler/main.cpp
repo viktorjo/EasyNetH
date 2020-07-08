@@ -17,7 +17,7 @@
 #include <string.h>
 #define PORT 8080
 
-void abstr_call()
+void abstr_echo_tcp_server_call()
 {
     AbstractSocket::BYTE data[1024] = { 0 };
     ssize_t bytes_read = 0;
@@ -65,6 +65,33 @@ void abstr_call()
     else {
         std::cout << "Could not send socket\n";
     }
+}
+
+void abstr_tcp_client_call()
+{
+	AbstractSocket::BYTE data[1024] = { 0 };
+    AbstractSocket test(AbstractSocket::TcpSocket);
+	std::string call_string = "echo";
+	ssize_t data_to_send = call_string.size();
+	memccpy(data, call_string.data(), 0, data_to_send);
+	
+	
+	bool success = test.connectToHost("127.0.0.1", PORT);
+	if (success)
+	{
+		std::cout << "Connected to host\n";
+	}
+	else
+	{
+		std::cout << "Failed to connect to host\n";
+		return;
+	}
+	success = test.sendData(data,data_to_send);
+	if (success) {
+		std::cout << "Sent message to host";
+	}
+	test.closeSockets();
+	
 }
 
 void nrml_call()
@@ -123,7 +150,8 @@ void nrml_call()
 
 int main(int argc, const char * argv[]) {
     
-    abstr_call();
+	abstr_tcp_client_call();
+	//abstr_echo_tcp_server_call();
     //nrml_call();
     
     return 0;

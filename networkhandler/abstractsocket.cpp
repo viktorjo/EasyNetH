@@ -14,7 +14,7 @@ AbstractSocket::AbstractSocket(AbstractSocket::SocketType socketType)
     this->socket_type = socketType;
     socket_internal.address.sin_family = AF_INET;
     socket_internal.address.sin_addr.s_addr = INADDR_ANY;
-    //socket_out = socket_internal;
+    
 }
 
 AbstractSocket::~AbstractSocket()
@@ -22,39 +22,26 @@ AbstractSocket::~AbstractSocket()
     
 }
 
+bool AbstractSocket::isAddrOk(std::string addr)
+{
+	return inet_addr(addr.data()) != -1;
+}
+
 bool AbstractSocket::bind(u_int16_t port)
 {
     
-    
-    
-    socket_internal.socket_fd = socket(AF_INET,
-                        SOCK_STREAM,
-                        0);
-    if (socket_internal.socket_fd == 0)
-    {
-        socket_error = SOCKET_CREATION_FAILED;
-        perror("Could not create socket");
-        return false;
+    switch (this->socket_type) {
+        case TcpSocket:
+            return bindTcp(port);
+            break;
+        case UdpSocket:
+            //return bindUdp(port);
+            break;
+        default:
+            socket_error = SOCKET_TYPE_NOT_SUPPORTED;
+			break;
     }
-    else
-    {
-        socket_internal.address.sin_port = htons( port );
-        if (::setsockopt(socket_internal.socket_fd, SOL_SOCKET, SO_REUSEADDR, &socket_internal.opt, sizeof(socket_internal.opt)))
-        {
-            perror("setsockopt");
-            return false;
-        }
-    }
-    
-    if(::bind(socket_internal.socket_fd, (struct sockaddr *) &socket_internal.address, sizeof(socket_internal.address)) < 0)
-    {
-        perror("Could not bind");
-        socket_error = COULD_NOT_BIND;
-        return false;
-    }
-    socket_error = NO_ERROR;
-    socket_state = BOUND;
-    return true;
+    return false;
 }
 
 bool AbstractSocket::listen(int maxIncomingConnection)
@@ -94,9 +81,38 @@ bool AbstractSocket::accept()
     return true;
 }
 
-void AbstractSocket::connectToHost(const std::string &hostName, u_int16_t port)
+bool AbstractSocket::connectToHost(const std::string &hostName, u_int16_t port)
 {
-    
+	if (!isAddrOk(hostName)) {
+		socket_error = BAD_ADDRESS;
+		perror("Bad address.");
+		return false;
+	}
+	
+	socket_out.socket_fd = socket(AF_INET,SOCK_STREAM,0);
+	if (socket_out.socket_fd == 0)
+    {
+        socket_error = SOCKET_CREATION_FAILED;
+        perror("Could not create socket");
+        return false;
+    }
+	socket_out.address.sin_addr.s_addr = inet_addr(hostName.data());
+	socket_out.address.sin_port = htons( port );
+	
+	if (connect(socket_internal.socket_fd, (struct sockaddr *) &socket_internal.address, sizeof(socket_internal.address)) != 0)
+	{
+		socket_error = CONNECT_FAILED;
+		perror("Failed to connect to server");
+		return false;
+	}
+	
+    return true;
+}
+
+void AbstractSocket::closeSockets()
+{
+	close(socket_internal.socket_fd);
+	close(socket_out.socket_fd);
 }
 /*
 ssize_t AbstractSocket::readAll()
@@ -160,15 +176,35 @@ ssize_t AbstractSocket::sendData(const BYTE *data, size_t size)
  *
  **/
 
-/*
-AbstractSocket::AbstractSocket(const AbstractSocket &other, enum SocketState state)
+bool AbstractSocket::bindTcp(uint16_t port)
 {
-    this->socket_internal = other.socket_internal;
-    this->socket_out = other.socket_out;
-    this->socket_type = other.socket_type;
-    this->socket_state = state;
+    socket_internal.socket_fd = socket(AF_INET,SOCK_STREAM,0);
+    if (socket_internal.socket_fd == 0)
+    {
+        socket_error = SOCKET_CREATION_FAILED;
+        perror("Could not create socket");
+        return false;
+    }
+    else
+    {
+        socket_internal.address.sin_port = htons( port );
+        if (::setsockopt(socket_internal.socket_fd, SOL_SOCKET, SO_REUSEADDR, &socket_internal.opt, sizeof(socket_internal.opt)))
+        {
+            perror("setsockopt");
+            return false;
+        }
+    }
+    
+    if(::bind(socket_internal.socket_fd, (struct sockaddr *) &socket_internal.address, sizeof(socket_internal.address)) < 0)
+    {
+        perror("Could not bind");
+        socket_error = COULD_NOT_BIND;
+        return false;
+    }
+    socket_error = NO_ERROR;
+    socket_state = BOUND;
+    return true;
 }
-*/
 
 
 

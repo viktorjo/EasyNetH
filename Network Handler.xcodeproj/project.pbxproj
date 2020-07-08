@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		01E225BB2412DC71004903DB /* tcpsocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01E225BA2412DC71004903DB /* tcpsocket.cpp */; };
 		01E225BE24141216004903DB /* abstractsocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01E225BC24141216004903DB /* abstractsocket.cpp */; };
 		4586425823312894001A5FCA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4586425723312894001A5FCA /* main.cpp */; };
 		4586425F23313102001A5FCA /* connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4586425E23313009001A5FCA /* connection.cpp */; };
@@ -26,8 +25,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		01E225B92412DC30004903DB /* tcpsocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tcpsocket.h; sourceTree = SOURCE_ROOT; };
-		01E225BA2412DC71004903DB /* tcpsocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tcpsocket.cpp; sourceTree = "<group>"; };
 		01E225BC24141216004903DB /* abstractsocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = abstractsocket.cpp; sourceTree = "<group>"; };
 		01E225BD24141216004903DB /* abstractsocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = abstractsocket.hpp; sourceTree = "<group>"; };
 		4586425423312894001A5FCA /* networkhandler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = networkhandler; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,10 +65,8 @@
 		4586425623312894001A5FCA /* networkhandler */ = {
 			isa = PBXGroup;
 			children = (
-				01E225B92412DC30004903DB /* tcpsocket.h */,
 				01E225BC24141216004903DB /* abstractsocket.cpp */,
 				01E225BD24141216004903DB /* abstractsocket.hpp */,
-				01E225BA2412DC71004903DB /* tcpsocket.cpp */,
 				4586425723312894001A5FCA /* main.cpp */,
 			);
 			path = networkhandler;
@@ -135,7 +130,6 @@
 				01E225BE24141216004903DB /* abstractsocket.cpp in Sources */,
 				4586425F23313102001A5FCA /* connection.cpp in Sources */,
 				4586425823312894001A5FCA /* main.cpp in Sources */,
-				01E225BB2412DC71004903DB /* tcpsocket.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

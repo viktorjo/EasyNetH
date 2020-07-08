@@ -7,24 +7,8 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6C7DB427-EA45-4E0E-9F37-E8F701D77DF8"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "networkhandler/abstractsocket.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "AbstractSocket::bind(port)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "3CBB8241-830A-4A3B-91D4-5262CCC5EF67"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "networkhandler/main.cpp"
@@ -32,7 +16,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "64"
             endingLineNumber = "64"
-            landmarkName = "nrml_call()"
+            landmarkName = "abstr_echo_tcp_server_call()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -40,7 +24,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "E86AF5B0-F9E3-4627-9D99-44C82170076F"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "networkhandler/main.cpp"
@@ -48,7 +32,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "28"
             endingLineNumber = "28"
-            landmarkName = "abstr_call()"
+            landmarkName = "abstr_echo_tcp_server_call()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
